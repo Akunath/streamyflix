@@ -1,9 +1,12 @@
 import os
 from flask import Flask, request, render_template
 import telebot
+from dotenv import load_dotenv
+
+load_dotenv()
 
 TOKEN = os.environ.get("7404159709:AAH5cMs5CmUzGxgStCdCisqSpLk45eFBlyw")
-CHANNEL_USERNAME = '@StreamyFlixHD'
+CHANNEL_USERNAME = "@StreamyFlixHD"
 
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
@@ -18,7 +21,7 @@ def handle_video(message):
     public_link = f"https://t.me/{CHANNEL_USERNAME[1:]}/{msg_id}"
     stream_link = f"https://streamyflix.onrender.com/watch/{msg_id}"
     video_links[msg_id] = file_id
-    bot.reply_to(message, f"✅ Uploaded!\n📺 [Watch Online]({stream_link})", parse_mode="Markdown")
+    bot.reply_to(message, f"✅ Uploaded!\n\n[Watch Online]({stream_link})", parse_mode="Markdown")
 
 @app.route("/watch/<int:msg_id>")
 def stream_video(msg_id):
