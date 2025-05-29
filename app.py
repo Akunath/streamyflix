@@ -2,10 +2,11 @@ import os
 from flask import Flask, request, render_template
 import telebot
 from dotenv import load_dotenv
+from threading import Thread
 
 load_dotenv()
 
-TOKEN = os.environ.get("7404159709:AAH5cMs5CmUzGxgStCdCisqSpLk45eFBlyw")
+TOKEN = os.environ.get("BOT_TOKEN")
 CHANNEL_USERNAME = "@StreamyFlixHD"
 
 bot = telebot.TeleBot(TOKEN)
@@ -36,5 +37,9 @@ def stream_video(msg_id):
 def index():
     return "✅ StreamyFlix bot is running!"
 
-if __name__ == "__main__":
+def run_bot():
     bot.polling(non_stop=True)
+
+if __name__ == "__main__":
+    Thread(target=run_bot).start()
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
